@@ -1,0 +1,187 @@
+
+Below are some example of using hibernate and manipulation the database and
+  using the singleton pattern to do so.
+
+
+
+/*
+*
+* ************EXAMPLE FOR ADDING A FLASHCARD TO THE DATABASE***************
+*
+*/
+
+package hibernate;
+
+
+/*
+ * Adding records to the Flashcard database
+ * @author Ryan
+ */
+
+public class addFlashcard {
+
+	private void addNewFlashcard() {
+		
+		HibernateUtilSingleton.getSessionFactory().getCurrentSession();
+		
+		Transaction transaction = session.beginTransaction();
+		
+		/*Instances of flashcard
+		 * 
+		 */
+		
+		Flashcard aFlashcard = new Flashcard();
+		aFlashcard.setTerm("aTerm");
+		aFlashcard.setDefinition("aDefinition");
+		
+		Flashcard mathCard = new Card();
+		mathCardOne.setTerm("Addition");
+		mathCardOne.setDefinition("The formula of addding to integers");
+		
+		/*
+		 * saving flashcard as a record in the database
+		 */
+	
+		session.save(aFlashcard);
+		session.save(mathCardOne);
+		transaction.commit();	
+		
+	}
+	
+}
+
+
+
+/*
+*
+* ************EXAMPLE FOR USING THE SINGLETON PATTERN***************
+* ********the URL and other information will be changed as the app progresses******
+*/
+
+package hibernate;
+
+import org.hibernate.SessionFactory;
+
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.ServiceRegistryBuilder;
+
+public class HibernateUtilSingleton
+
+{
+
+	private static final SessionFactory sessionFactory;
+
+	static{
+		Configuration config = new Configuration();
+
+		config.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+
+		config.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
+
+		
+
+		config.setProperty("Daniel is working on this part", "jdbc:mysql://localhost:9090/test");
+
+	
+		config.setProperty("hibernate.connection.username", "GrantRyan1");
+
+		config.setProperty("hibernate.connection.password", "ryangrant");
+
+
+		config.setProperty("hibernate.connection.pool_size", "1");
+		// Using one for my single user purpose, but our entire group will have access and number will be changed to 9
+
+		config.setProperty("hibernate.connection.autocommit", "true");
+
+		config.setProperty("hibernate.cache.provider_class", "org.hibernate.cache.NoCacheProvider");
+
+		
+		config.setProperty("hibernate.show_sql", "true");
+
+		config.setProperty("hibernate.transaction.factory_class", "org.hibernate.transaction.JDBCTransactionFactory");
+
+		config.setProperty("hibernate.current_session_context_class", "thread");
+
+		
+		config.addAnnotatedClass(User.class);
+		config.addAnnotatedClass(Flashcard.class);
+		config.addAnnotatedClass(Term.class);
+		config.addAnnotatedClass(Definition.class);
+		ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(config.getProperties()).buildServiceRegistry();        
+
+		sessionFactory = config.buildSessionFactory(serviceRegistry);
+
+	}
+
+	public static SessionFactory getSessionFactory(){
+
+		return sessionFactory;
+
+	}
+
+	private HibernateUtilSingleton(){
+
+	}
+
+}
+
+
+
+/*
+*
+* ************EXAMPLE FOR ADDING A TERM TO THE DATABASE***************
+*
+*/
+
+
+package hibernate;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+@Entity
+@Table(name = "term")
+public class term {
+    
+    @Id
+    @GeneratedValue
+    private Integer id;
+    private String term;
+    public String getTerm() {
+        return term;
+    }
+    public void setTerm(String term) {
+        this.term = term;
+    }
+}
+
+/*
+*
+* ************EXAMPLE FOR ADDING A DEFINITION TO THE DATABASE***************
+*
+*/
+
+package hibernate;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "definition")
+public class definition {
+    
+    @Id
+    @GeneratedValue
+    private Integer id;
+    private String definition;
+    public String getDefinition() {
+        return definition;
+    }
+    public void setDefinition(String definition) {
+        this.definition = definition;
+    }
+}

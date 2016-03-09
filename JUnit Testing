@@ -1,0 +1,62 @@
+//Here is the code I wrote for Junit Testing
+
+//Junit.java
+
+package junittests;
+
+public class Junit {
+
+	public String concatenate(String one, String two) {
+		
+		return one + two;
+	}
+	
+	public int multiply(int number1, int number2) {
+		
+		return number1 * number2;
+	}
+}
+
+
+//ConcateTest.java
+
+package junittests;
+
+import static org.junit.Assert.*;
+import org.junit.Test;
+
+public class ConcateTest {
+
+	@Test
+	public void testConcatenate() {
+		Junit test = new Junit();
+		String result = test.concatenate("one", "two");
+		assertEquals("onetwo", result);
+				
+	}
+
+}
+
+//MultiplyTest.java
+
+package junittests;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class MultiplyTest {
+
+	@Test
+	public void testMultiply() {
+		Junit test = new Junit();
+		int result = test.multiply(3, 4);
+		assertEquals(12, result);
+				
+	}
+
+}
+
+
+
+

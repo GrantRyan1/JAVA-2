@@ -1,0 +1,100 @@
+
+//URLClass.java
+package urlConnection;
+
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+public class URLClass {
+
+	URL url = new URL("http://www.google.com/");
+	HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+		try {
+			InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+			readStream(in);
+			finally {
+				urlConnection.disconnect();
+				
+			}
+		}
+}
+
+
+//CheckConnection.java
+package urlConnection;
+
+public class CheckConnection {
+
+	public boolean isNetworkAvailable() {
+	    ConnectivityManager cm = (ConnectivityManager) 
+	      getSystemService(Context.CONNECTIVITY_SERVICE);
+	    NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+	    // if no network is available networkInfo will be null
+	    // otherwise check if we are connected
+	    if (networkInfo != null && networkInfo.isConnected()) {
+	        return true;
+	    }
+	    return false;
+	} 
+}
+
+
+//URLConnectionReader.java
+package urlConnection;
+
+import java.net.*;
+import java.io.*;
+
+/*
+ * Code to write to a server
+ */
+
+	public class URLConnectionReader {
+	    public static void main(String[] args) throws Exception {
+	    //Used our server name that are implementing
+	        URL yelpserver = new URL("edu.byui.cit360.yelpserver");
+	        URLConnection ys = yelpserver.openConnection();
+	        BufferedReader in = new BufferedReader(new InputStreamReader(
+	                                    ys.getInputStream()));
+	        String inputLine;
+	        while ((inputLine = in.readLine()) != null) 
+	            System.out.println(inputLine);
+	        in.close();
+	    }
+}
+
+
+//URLConnectionWriter
+package urlConnection;
+
+import java.net.InetAddress;
+import java.net.Socket;
+
+/*
+ * author @Ryan
+ * code for writing to a server
+ */
+		
+public class URLConnectionWriter {
+   public static void main(String[] args) {
+      try {
+         InetAddress addr;
+    
+      //Just entered server we are planning to use for FlashCard Application 
+         Socket sock = new Socket("edu.byui.cit360.yelpserver", 9090);
+         addr = sock.getInetAddress();
+         System.out.println("Connected to " + addr);
+         sock.close();
+      } catch (java.io.IOException e) {
+         System.out.println("Can't connect to " + args[0]);
+         System.out.println(e);
+      }
+   }
+}
+
+
+
+
+

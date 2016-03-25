@@ -1,0 +1,11 @@
+
+
+Example code for AppController
+
+//Here it handles a request from the server printing out the result. More code would include if it is disconnected, connected, 
+//   if it is ready, or unable to connect/errors.
+
+ApplicationController appController = new ApplicationController();
+String result = appController.handleRequest(request, data);
+if (result == "invalid") System.out.println(result);
+

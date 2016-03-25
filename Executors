@@ -1,0 +1,8 @@
+//Here is an example using Exectuors with threads
+
+
+ExecutorService executor = Executors.newSingleThreadExecutor();
+executor.submit(() -> {
+    String threadName = Thread.currentThread().getName();
+    System.out.println("Hello " + threadName);
+});

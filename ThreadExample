@@ -1,0 +1,16 @@
+Runnable task = () -> {
+		String threadName = Thread.currentThread().getName();
+		System.out.println("Hello" + threadName);
+	};
+	
+	task.run();
+	
+	//creates a new thread and task
+	Thread thread = new Thread(task);
+	
+	//starts the thread
+	thread.start();
+	
+	System.out.println("Done");
+	}
+}
